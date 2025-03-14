@@ -1,0 +1,26 @@
+{
+    "name": "terrence-christopher/audio-transcription",
+    "description": "A Laravel package for audio transcription. Audio to Text Transcriber",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Terrence Christopher",
+            "email": "terrencechristopher28@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "TerrenceChristopher\\AudioTranscription\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "TerrenceChristopher\\AudioTranscription\\Providers\\AudioTranscriptionServiceProvider"
+            ],
+            "aliases": {
+                "AudioTranscription": "TerrenceChristopher\\AudioTranscription\\Facades\\AudioTranscriptionFacade"
+            }
+        }
+    }
+}

@@ -11,6 +11,6 @@ composer require terrence-christopher/audio-transcription
 
 php artisan vendor:publish --tag=public
 
-Project Coders
+# Project Coders TerSun
 Sanaullah Kiani
 Terrence Berg

@@ -9,25 +9,8 @@
 ```sh
 composer require terrence-christopher/audio-transcription
 
-## **📅 Usage in Blade Template**
-You can load the calendar in a Blade view like this:
-```blade
-@php
-    $calendarData = \Tuna976\CustomCalendar\CustomCalendar::generateCalendar();
-@endphp
+php artisan vendor:publish --tag=public
 
-@include('custom-calendar::calendar', ['calendarData' => $calendarData])
-```
-
----
-
-## **🚀 Next Steps**
-- **Improve mobile responsiveness** for small screens.
-- **Optimize NOAA data fetching** to reduce API requests.
-- **Add dynamic user selection** for NOAA stations.
-
-### **💬 Need Help?**
-For issues, feel free to create an **[Issue on GitHub](#)** or contact **976-Tuna**.
-
----
-
+Project Coders
+Sanaullah Kiani
+Terrence Berg

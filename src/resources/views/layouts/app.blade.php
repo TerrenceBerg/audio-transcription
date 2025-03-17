@@ -10,9 +10,10 @@
     <!-- Styles -->
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
-    <link href="{{ asset('css/quantum.css') }}" rel="stylesheet">
+    <link href="{{ asset('audio-transcription/css/quantum.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @yield('styles')
+    @livewireStyles
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg bg-dark border-bottom border-primary" data-bs-theme="dark">
@@ -43,16 +44,16 @@
 
     <!-- Animation container -->
     <div class="quantum-background"></div>
-    
+
     <!-- Main content -->
     <div class="container py-4">
         @yield('content')
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+{{--    <script src="{{ asset('js/app.js') }}"></script>--}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
-    <script src="{{ asset('js/quantum-animation.js') }}"></script>
+    <script src="{{ asset('audio-transcription/js/quantum-animation.js') }}"></script>
     <script>
         window.addEventListener('load', () => {
             try {
@@ -63,5 +64,6 @@
         });
     </script>
     @yield('scripts')
+    @livewireScripts
 </body>
 </html>

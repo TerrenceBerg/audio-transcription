@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\AudioTranscription;
+namespace TerrenceChristopher\AudioTranscription;
 
 class AudioTranscription
 {

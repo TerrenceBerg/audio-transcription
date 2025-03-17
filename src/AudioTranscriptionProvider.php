@@ -20,7 +20,9 @@ class AudioTranscriptionProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/config/ai-audio.php' => config_path('audio-transcription.php'),
         ], 'config');
-
+        $this->publishes([
+            __DIR__ . '/public' => public_path('audio-transcription'),
+        ], 'public');
         // Optionally load routes if defined.
         if (file_exists(__DIR__.'/../../routes/web.php')) {
             $this->loadRoutesFrom(__DIR__.'/../../routes/web.php');

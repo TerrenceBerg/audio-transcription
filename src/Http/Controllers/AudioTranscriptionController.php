@@ -87,8 +87,9 @@ class AudioTranscriptionController extends Controller
 
             // Update the database with transcribed text
             $transcription->update([
-                'audio_transcription' => $transcribedText,
-                'status' => AudioTranscription::STATUS_COMPLETED
+                'audio_transcription' => $transcribedText['text'],
+                'status' => AudioTranscription::STATUS_COMPLETED,
+                'audio_url' => $transcribedText['file_url'],
             ]);
 
             // Broadcast updated transcription event

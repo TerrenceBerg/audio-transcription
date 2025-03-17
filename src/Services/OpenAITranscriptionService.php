@@ -26,34 +26,34 @@ class OpenAITranscriptionService
      * @return string
      * @throws Exception
      */
-    public function transcribe(UploadedFile $file): string
+    public function transcribe(UploadedFile $file): array
     {
+        // Check if the uploaded file is valid and is an accepted audio format
         if (!$file->isValid() || !in_array($file->getMimeType(), ['audio/mpeg', 'audio/wav', 'audio/mp4', 'audio/x-m4a'])) {
-            return '';
+            return [];
         }
 
+        // Store the uploaded file temporarily
         $path = $file->storeAs('temp', $file->getClientOriginalName(), 'local');
         $fullPath = Storage::disk('local')->path($path);
 
         try {
-
-//            Livewire::dispatch('transcriptionStatus', 'Processing...');
-
+            // Send the file to the transcription API (e.g., OpenAI Whisper)
             $response = $this->client->audio()->transcribe([
                 'model' => 'whisper-1',
                 'file' => fopen($fullPath, 'r'),
             ]);
 
-            // Emit event for "Completed"
-//            Livewire::dispatch('transcriptionStatus', 'Completed');
-
-            Storage::disk('local')->delete($path);
-
-            return $response->text ?? '';
+            // Return transcription text and file URL for the list view
+            return [
+                'text' => $response->text ?? '',
+                'file_url' => Storage::disk('local')->url($path), // Generate the URL to listen to the file
+            ];
         } catch (\Exception $e) {
+            // Log the error if transcription fails
             Log::error('Transcription failed: ' . $e->getMessage());
-//            Livewire::dispatch('transcriptionStatus', 'Failed');
-            return '';
+
+            return [];
         }
     }
 

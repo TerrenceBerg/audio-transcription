@@ -10,3 +10,7 @@
 composer require terrence-christopher/audio-transcription
 
 php artisan vendor:publish --tag=public
+
+Project Coders
+Sanaullah Kiani
+Terrence Berg

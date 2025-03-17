@@ -7,7 +7,7 @@
 
 ### **1. Install via Composer**
 ```sh
-composer require 976-tuna/custom-calendar
+composer require terrence-christopher/audio-transcription
 
 ## **📅 Usage in Blade Template**
 You can load the calendar in a Blade view like this:

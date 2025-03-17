@@ -16,10 +16,10 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TerrenceChristopher\\AudioTranscription\\src\\Providers\\AudioTranscriptionServiceProvider"
+                "TerrenceChristopher\\AudioTranscription\\Providers\\AudioTranscriptionServiceProvider"
             ],
             "aliases": {
-                "AudioTranscription": "TerrenceChristopher\\AudioTranscription\\src\\Facades\\AudioTranscriptionFacade"
+                "AudioTranscription": "TerrenceChristopher\\AudioTranscription\\Facades\\AudioTranscriptionFacade"
             }
         }
     },

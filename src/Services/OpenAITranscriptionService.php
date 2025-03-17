@@ -34,7 +34,7 @@ class OpenAITranscriptionService
         }
 
         // Store the uploaded file temporarily
-        $path = $file->storeAs('temp', $file->getClientOriginalName(), 'local');
+        $path = $file->storeAs('transcript_audio_files', $file->getClientOriginalName(), 'local');
         $fullPath = Storage::disk('local')->path($path);
 
         try {

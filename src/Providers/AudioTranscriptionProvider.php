@@ -37,7 +37,7 @@ class AudioTranscriptionServiceProvider extends ServiceProvider
 
         // Register a singleton instance for your package.
         $this->app->singleton('audio-transcription', function ($app) {
-            return new \YourVendor\AudioTranscription\AudioTranscription;
+            return new \TerrenceChristopher\AudioTranscription\AudioTranscription;
         });
     }
 }

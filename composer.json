@@ -10,16 +10,16 @@
     ],
     "autoload": {
         "psr-4": {
-            "terrence-christopher\\audio-transcription\\": "src/"
+            "TerrenceChristopher\\AudioTranscription\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "terrence-christopher\\audio-transcription\\src\\Providers\\AudioTranscriptionServiceProvider"
+                "TerrenceChristopher\\AudioTranscription\\src\\Providers\\AudioTranscriptionServiceProvider"
             ],
             "aliases": {
-                "AudioTranscription": "terrence-christopher\\audio-transcription\\src\\Facades\\AudioTranscriptionFacade"
+                "AudioTranscription": "TerrenceChristopher\\AudioTranscription\\src\\Facades\\AudioTranscriptionFacade"
             }
         }
     },

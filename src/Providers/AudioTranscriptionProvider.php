@@ -1,6 +1,6 @@
 <?php
 
-namespace YourVendor\AudioTranscription\Providers;
+namespace TerrenceChristopher\AudioTranscription\Providers;
 
 use Illuminate\Support\ServiceProvider;
 

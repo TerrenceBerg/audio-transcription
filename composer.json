@@ -17,8 +17,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "TerrenceChristopher\\AudioTranscription\\AudioTranscriptionProvider",
-                "Transcribe\\AiAudio\\AiAudioServiceProvider"
+                "TerrenceChristopher\\AudioTranscription\\AudioTranscriptionProvider"
             ],
             "aliases": {
                 "AudioTranscription": "TerrenceChristopher\\AudioTranscription\\Facades\\AudioTranscriptionFacade",

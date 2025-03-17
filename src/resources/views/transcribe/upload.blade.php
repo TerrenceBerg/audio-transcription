@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('audio-transcription::layouts.app')
 
 @section('title', 'AI Audio Transcription')
 
@@ -26,9 +26,9 @@
                     <div class="mb-3">
                         <label class="form-label">Upload Audio File</label>
                         <input type="file" name="audio_file" accept="audio/*" class="form-control">
-                        @error('audio_file')
-                            <div class="text-danger mt-1 small">{{ $message }}</div>
-                        @enderror
+{{--                        @error('audio_file')--}}
+{{--                            <div class="text-danger mt-1 small">{{ $message }}</div>--}}
+{{--                        @enderror--}}
                     </div>
                     <button type="submit" class="btn btn-primary">
                         Upload and Transcribe
@@ -37,29 +37,8 @@
 
                 <div class="mt-5">
                     <h2 class="h4 mb-4">Recent Transcriptions</h2>
-                    @foreach($transcriptions as $transcription)
-                        <div class="card mb-3 shadow-sm border-dark" data-transcription-id="{{ $transcription->id }}">
-                            <div class="card-body">
-                                <div class="d-flex justify-content-between align-items-center mb-2">
-                                    <small class="text-muted">{{ $transcription->created_at->diffForHumans() }}</small>
-                                    <span class="badge {{ 
-                                        $transcription->status === 'completed' ? 'bg-success' :
-                                        ($transcription->status === 'processing' ? 'bg-warning' :
-                                        ($transcription->status === 'failed' ? 'bg-danger' : 'bg-secondary'))
-                                    }}">
-                                        {{ ucfirst($transcription->status) }}
-                                    </span>
-                                </div>
-                                <div class="transcription-text">
-                                    {{ $transcription->audio_transcription ?? 'Processing...' }}
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-
-                    <div class="d-flex justify-content-center mt-4">
-                        {!! $transcriptions->withQueryString()->links('pagination::bootstrap-5') !!}
-                    </div>
+                        <!-- Livewire Component -->
+                        @livewire('transcriptions-list')
                 </div>
             </div>
         </div>

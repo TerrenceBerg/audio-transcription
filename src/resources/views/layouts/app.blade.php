@@ -13,6 +13,7 @@
     <link href="{{ asset('css/quantum.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @yield('styles')
+    @livewireStyles
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg bg-dark border-bottom border-primary" data-bs-theme="dark">
@@ -43,7 +44,7 @@
 
     <!-- Animation container -->
     <div class="quantum-background"></div>
-    
+
     <!-- Main content -->
     <div class="container py-4">
         @yield('content')
@@ -63,5 +64,6 @@
         });
     </script>
     @yield('scripts')
+    @livewireScripts
 </body>
 </html>

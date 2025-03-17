@@ -1,14 +1,22 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace TerrenceChristopher\AudioTranscription\Http\Controllers;
 
-use App\Models\AudioTranscription;
-use App\Jobs\TranscribeAudioJob;
+use Livewire\Livewire;
+use TerrenceChristopher\AudioTranscription\Models\AudioTranscription;
 use Illuminate\Http\Request;
-use Transcribe\AiAudio\Facades\AiAudio;
+use Illuminate\Routing\Controller;
+use TerrenceChristopher\AudioTranscription\Services\OpenAITranscriptionService;
+use Exception;
 
 class AudioTranscriptionController extends Controller
 {
+    protected OpenAITranscriptionService $transcriptionService;
+
+    public function __construct(OpenAITranscriptionService $transcriptionService)
+    {
+        $this->transcriptionService = $transcriptionService;
+    }
     public function store(Request $request)
     {
         $validated = $request->validate([
@@ -17,11 +25,20 @@ class AudioTranscriptionController extends Controller
 
         $transcription = AudioTranscription::create($validated);
 
-        // Transcribe the audio (you might want to move this to a job)
-        $transcribedText = AiAudio::transcribe($validated['audio_url']);
-        $transcription->update(['audio_transcription' => $transcribedText]);
+        $request->validate([
+            'audio' => 'required|file|mimes:mp3,wav,ogg,m4a,flac|max:10240',
+        ]);
 
-        return response()->json($transcription, 201);
+        try {
+            $transcription = $this->transcriptionService->transcribe($request->file('audio'));
+            dd($transcription);
+            return response()->json(['transcription' => $transcription]);
+        } catch (Exception $e) {
+            dd($e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 400);
+
+        }
+//        return response()->json($transcription, 201);
     }
 
     public function index()
@@ -42,8 +59,7 @@ class AudioTranscriptionController extends Controller
 
     public function uploadForm()
     {
-        $transcriptions = AudioTranscription::latest()->paginate(10); // Changed from take(5)
-        return view('transcribe.upload', compact('transcriptions'));
+        return view('audio-transcription::transcribe.upload');
     }
 
     public function upload(Request $request)
@@ -56,20 +72,46 @@ class AudioTranscriptionController extends Controller
         $path = $file->store('audio_files', 'public');
         $url = asset('storage/' . $path);
 
+        // Create a transcription entry with PENDING status
         $transcription = AudioTranscription::create([
             'audio_url' => $url,
+            'status' => AudioTranscription::STATUS_PENDING
         ]);
 
-        TranscribeAudioJob::dispatch($transcription);
+        // Broadcast new transcription event
+//        Livewire::dispatch('newTranscription');
 
-        return redirect()->back()->with('success', 'Audio uploaded and queued for transcription.');
+        try {
+            // Call the transcription service
+            $transcribedText = $this->transcriptionService->transcribe($file);
+
+            // Update the database with transcribed text
+            $transcription->update([
+                'audio_transcription' => $transcribedText,
+                'status' => AudioTranscription::STATUS_COMPLETED
+            ]);
+
+            // Broadcast updated transcription event
+//            Livewire::dispatch('transcriptionUpdated');
+
+
+        } catch (Exception $e) {
+            // Update status to failed
+            $transcription->update(['status' => AudioTranscription::STATUS_FAILED]);
+
+            // Broadcast update event
+//            Livewire::dispatch('transcriptionUpdated');
+
+            return response()->json([
+                'error' => 'Transcription failed',
+                'message' => $e->getMessage()
+            ], 400);
+        }
+        return redirect()->route('transcribe.form');
     }
 
     public function list()
     {
-        $transcriptions = AudioTranscription::latest()
-            ->withTrashed()
-            ->paginate(15);
-        return view('transcribe.list', compact('transcriptions'));
+        return view('audio-transcription::transcribe.list');
     }
 }

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AudioTranscriptionController;
+use TerrenceChristopher\AudioTranscription\Http\Controllers\AudioTranscriptionController;
 
 Route::get('/transcribe', [AudioTranscriptionController::class, 'uploadForm'])->name('transcribe.form');
 Route::post('/transcribe', [AudioTranscriptionController::class, 'upload'])->name('transcribe.upload');

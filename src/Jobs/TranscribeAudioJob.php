@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Jobs;
+namespace TerrenceChristopher\AudioTranscription\Jobs;
 
-use App\Models\AudioTranscription;
+use TerrenceChristopher\AudioTranscription\Models\AudioTranscription;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,27 +25,27 @@ class TranscribeAudioJob implements ShouldQueue
     public function handle()
     {
         try {
-            Log::info('Starting transcription with config', [
-                'has_api_key' => !empty(config('ai-audio.openai_api_key')),
-                'key_length' => strlen(config('ai-audio.openai_api_key') ?? '')
-            ]);
-
-            if (empty(config('ai-audio.openai_api_key'))) {
-                throw new \RuntimeException('OpenAI API key is not configured');
-            }
+//            Log::info('Starting transcription with config', [
+//                'has_api_key' => !empty(config('audio-transcription.openai_api_key')),
+//                'key_length' => strlen(config('audio-transcription.openai_api_key') ?? '')
+//            ]);
+//
+//            if (empty(config('audio-transcription.openai_api_key'))) {
+//                throw new \RuntimeException('OpenAI API key is not configured');
+//            }
 
             Log::info('Starting transcription job', ['id' => $this->transcription->id]);
             $this->transcription->update(['status' => AudioTranscription::STATUS_PROCESSING]);
-            
+
             // Get file path correctly using parse_url and realpath
             $urlPath = parse_url($this->transcription->audio_url, PHP_URL_PATH);
             $relativePath = str_replace('/storage/', '', $urlPath);
             $fullPath = realpath(storage_path('app/public/' . $relativePath));
-            
+
             if (!$fullPath) {
                 throw new \RuntimeException("Could not resolve real path for audio file");
             }
-            
+
             Log::info('File path resolved', [
                 'original_url' => $this->transcription->audio_url,
                 'resolved_path' => $fullPath
@@ -74,7 +74,7 @@ class TranscribeAudioJob implements ShouldQueue
             ]);
 
             $transcribedText = AiAudio::transcribe($fullPath);
-            
+
             Log::info('Transcription response', [
                 'text_length' => strlen($transcribedText),
                 'text_preview' => substr($transcribedText, 0, 100)
@@ -88,7 +88,7 @@ class TranscribeAudioJob implements ShouldQueue
                 'audio_transcription' => $transcribedText,
                 'status' => AudioTranscription::STATUS_COMPLETED
             ]);
-            
+
             Log::info('Transcription completed successfully', ['id' => $this->transcription->id]);
         } catch (\Exception $e) {
             Log::error('Transcription failed', [
@@ -101,7 +101,7 @@ class TranscribeAudioJob implements ShouldQueue
                 'status' => AudioTranscription::STATUS_FAILED,
                 'error' => $e->getMessage()
             ]);
-            
+
             throw $e;
         }
     }

@@ -6,3 +6,7 @@ use TerrenceChristopher\AudioTranscription\Http\Controllers\AudioTranscriptionCo
 Route::get('/transcribe', [AudioTranscriptionController::class, 'uploadForm'])->name('transcribe.form');
 Route::post('/transcribe', [AudioTranscriptionController::class, 'upload'])->name('transcribe.upload');
 Route::get('/transcribe/list', [AudioTranscriptionController::class, 'list'])->name('transcribe.list');
+
+\Livewire\Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/livewire/update', $handle);
+});

@@ -10,3 +10,7 @@ Route::get('/transcribe/list', [AudioTranscriptionController::class, 'list'])->n
 \Livewire\Livewire::setUpdateRoute(function ($handle) {
     return Route::post('/livewire/update', $handle);
 });
+
+\Livewire\Livewire::setUpdateRoute(function ($handle) {
+    return Route::post('/livewire/upload-file', $handle);
+});

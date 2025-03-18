@@ -2,7 +2,7 @@
 
 namespace TerrenceChristopher\AudioTranscription;
 
-use App\Http\Livewire\TranscriptionsList;
+use TerrenceChristopher\AudioTranscription\Livewire\TranscriptionsList;
 use Illuminate\Support\ServiceProvider;
 use Livewire\Livewire;
 use OpenAI\Factory;
@@ -60,7 +60,7 @@ class AudioTranscriptionProvider extends ServiceProvider
                 ->withApiKey(config('audio-transcription.openai_api_key')) // Get API key from config
                 ->make();
         });
-        Livewire::component('transcriptions-list', \TerrenceChristopher\AudioTranscription\Livewire\TranscriptionsList::class);
+        Livewire::component('transcriptions-list', TranscriptionsList::class);
         Livewire::component('upload-audio', \TerrenceChristopher\AudioTranscription\Livewire\UploadAudio::class);
 
         // Bind Transcription Service

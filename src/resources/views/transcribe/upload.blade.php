@@ -21,19 +21,20 @@
                     </div>
                 @endif
 
-                <form action="{{ route('transcribe.upload') }}" method="POST" enctype="multipart/form-data">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label">Upload Audio File</label>
-                        <input type="file" name="audio_file" accept="audio/*" class="form-control">
+{{--                <form action="{{ route('transcribe.upload') }}" method="POST" enctype="multipart/form-data">--}}
+{{--                    @csrf--}}
+{{--                    <div class="mb-3">--}}
+{{--                        <label class="form-label">Upload Audio File</label>--}}
+{{--                        <input type="file" name="audio_file" accept="audio/*" class="form-control">--}}
 {{--                        @error('audio_file')--}}
 {{--                            <div class="text-danger mt-1 small">{{ $message }}</div>--}}
 {{--                        @enderror--}}
-                    </div>
-                    <button type="submit" class="btn btn-primary">
-                        Upload and Transcribe
-                    </button>
-                </form>
+{{--                    </div>--}}
+{{--                    <button type="submit" class="btn btn-primary">--}}
+{{--                        Upload and Transcribe--}}
+{{--                    </button>--}}
+{{--                </form>--}}
+                @livewire('upload-audio')
 
                 <div class="mt-5">
                     <h2 class="h4 mb-4">Recent Transcriptions</h2>

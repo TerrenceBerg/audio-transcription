@@ -4,16 +4,16 @@
     <title>@yield('title', config('app.name'))</title>
     <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+{{--    <meta name="csrf-token" content="{{ csrf_token() }}">--}}
     <meta name="viewport" content="width=device-width, initial-scale=1">
      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Styles -->
 
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    @livewireStyles
     <link href="{{ asset('audio-transcription/css/quantum.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @yield('styles')
-    @livewireStyles
 </head>
 <body class="bg-light">
     <nav class="navbar navbar-expand-lg bg-dark border-bottom border-primary" data-bs-theme="dark">
@@ -53,10 +53,11 @@
     <!-- Scripts -->
 {{--    <script src="{{ asset('js/app.js') }}"></script>--}}
     {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script> --}}
+    @livewireScripts
     <script src="{{ asset('audio-transcription/js/quantum-animation.js') }}"></script>
     <script>
         window.addEventListener('load', () => {
-            try {
+                try {
                 new QuantumAnimation();
             } catch (e) {
                 console.error('Animation failed to initialize:', e);
@@ -64,6 +65,5 @@
         });
     </script>
     @yield('scripts')
-    @livewireScripts
 </body>
 </html>
